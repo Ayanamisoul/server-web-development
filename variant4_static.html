@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вариант 4 — Решение уравнения X / 8 = 6</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f7f9fc;
+            color: #333;
+        }
+        h1, h2 {
+            color: #1a237e;
+        }
+        .result-box {
+            background: #fff;
+            border-left: 5px solid #1a237e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+        .result-box p {
+            margin: 8px 0;
+            font-size: 1.1rem;
+        }
+        .highlight {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        .svg-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+        svg {
+            display: block;
+            margin: 0 auto;
+        }
+        .legend {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        .legend span {
+            display: inline-block;
+            width: 20px;
+            height: 12px;
+            margin-right: 6px;
+            border: 1px solid #333;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+
+<h1>Домашняя работа: Solve the equation</h1>
+<h2>Вариант 4 — Уравнение: <span class="highlight">X / 8 = 6</span></h2>
+
+<div class="result-box">
+    <p><strong>Исходное уравнение:</strong> X/8=6</p>
+    <p><strong>Оператор:</strong> <span class="highlight">деление (/)</span></p>
+    <p><strong>Расположение неизвестной X:</strong> левая часть, первый операнд</p>
+    <p><strong>Шаги решения:</strong> X = 6 * 8</p>
+    <p><strong>Значение переменной:</strong> <span class="highlight">X = 48</span></p>
+</div>
+
+<h2>Блок-схема алгоритма работы программы</h2>
+<div class="svg-container">
+    <svg width="720" height="1050" viewBox="0 0 720 1050" xmlns="http://www.w3.org/2000/svg">
+        <!-- Styles -->
+        <defs>
+            <style>
+                .box { fill: #e3f2fd; stroke: #1565c0; stroke-width: 2; }
+                .diamond { fill: #fff3e0; stroke: #ef6c00; stroke-width: 2; }
+                .oval { fill: #e8f5e9; stroke: #2e7d32; stroke-width: 2; }
+                .par { fill: #f3e5f5; stroke: #6a1b9a; stroke-width: 2; }
+                .txt { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 15px; text-anchor: middle; dominant-baseline: middle; }
+                .arr { stroke: #333; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+                .lbl { font-size: 13px; fill: #333; text-anchor: middle; }
+            </style>
+            <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L0,6 L9,3 z" fill="#333" />
+            </marker>
+        </defs>
+
+        <!-- 1. Начало -->
+        <ellipse cx="360" cy="40" rx="70" ry="30" class="oval"/>
+        <text x="360" y="40" class="txt">Начало</text>
+        <line x1="360" y1="70" x2="360" y2="100" class="arr"/>
+
+        <!-- 2. Ввод уравнения -->
+        <polygon points="360,100 600,130 360,160 120,130" class="par"/>
+        <text x="360" y="130" class="txt">Ввод уравнения (строка)</text>
+        <line x1="360" y1="160" x2="360" y2="190" class="arr"/>
+
+        <!-- 3. Удаление пробелов и нормализация X -->
+        <rect x="180" y="190" width="360" height="50" rx="6" class="box"/>
+        <text x="360" y="215" class="txt">Удалить пробелы, привести X к верхнему регистру</text>
+        <line x1="360" y1="240" x2="360" y2="270" class="arr"/>
+
+        <!-- 4. Разделить по '=' -->
+        <rect x="210" y="270" width="300" height="50" rx="6" class="box"/>
+        <text x="360" y="295" class="txt">Разделить строку по '=' на left и right</text>
+        <line x1="360" y1="320" x2="360" y2="350" class="arr"/>
+
+        <!-- 5. Поиск оператора слева -->
+        <rect x="160" y="350" width="400" height="50" rx="6" class="box"/>
+        <text x="360" y="375" class="txt">Искать оператор (+, -, *, /) в левой части</text>
+        <line x1="360" y1="400" x2="360" y2="430" class="arr"/>
+
+        <!-- 6. Найден оператор слева? -->
+        <polygon points="360,430 480,480 360,530 240,480" class="diamond"/>
+        <text x="360" y="480" class="txt">Оператор найден?</text>
+        <!-- Yes -->
+        <line x1="480" y1="480" x2="580" y2="480" class="arr"/>
+        <text x="530" y="470" class="lbl">Да</text>
+        <!-- No -->
+        <line x1="240" y1="480" x2="140" y2="480" class="arr"/>
+        <text x="190" y="470" class="lbl">Нет</text>
+
+        <!-- Ветка ДА: side = left -->
+        <rect x="580" y="455" width="120" height="50" rx="6" class="box"/>
+        <text x="640" y="480" class="txt">side = left</text>
+        <line x1="640" y1="505" x2="640" y2="580" class="arr"/>
+        <line x1="640" y1="580" x2="360" y2="580" class="arr"/>
+        <line x1="360" y1="580" x2="360" y2="610" class="arr"/>
+
+        <!-- Ветка НЕТ: искать справа -->
+        <rect x="20" y="455" width="120" height="50" rx="6" class="box"/>
+        <text x="80" y="480" class="txt">side = right</text>
+        <line x1="80" y1="505" x2="80" y2="580" class="arr"/>
+        <rect x="20" y="580" width="120" height="50" rx="6" class="box"/>
+        <text x="80" y="605" class="txt">Искать оператор</text>
+        <text x="80" y="620" class="txt">в правой части</text>
+        <line x1="80" y1="630" x2="80" y2="660" class="arr"/>
+        <line x1="80" y1="660" x2="360" y2="660" class="arr"/>
+        <line x1="360" y1="660" x2="360" y2="690" class="arr"/>
+
+        <!-- Общая точка после определения стороны -->
+        <!-- 7. Определить операнды -->
+        <rect x="160" y="690" width="400" height="50" rx="6" class="box"/>
+        <text x="360" y="715" class="txt">Определить operand1 и operand2 относительно оператора</text>
+        <line x1="360" y1="740" x2="360" y2="770" class="arr"/>
+
+        <!-- 8. Где находится X? -->
+        <polygon points="360,770 480,820 360,870 240,820" class="diamond"/>
+        <text x="360" y="815" class="txt">X в operand1</text>
+        <text x="360" y="835" class="txt">или operand2?</text>
+        <line x1="480" y1="820" x2="580" y2="820" class="arr"/>
+        <text x="530" y="810" class="lbl">operand1</text>
+        <line x1="240" y1="820" x2="140" y2="820" class="arr"/>
+        <text x="190" y="810" class="lbl">operand2</text>
+
+        <!-- Ветка operand1 -->
+        <rect x="580" y="795" width="120" height="50" rx="6" class="box"/>
+        <text x="640" y="820" class="txt">X op b = c</text>
+        <line x1="640" y1="845" x2="640" y2="920" class="arr"/>
+        <rect x="580" y="920" width="120" height="50" rx="6" class="box"/>
+        <text x="640" y="945" class="txt">X = c (обр. op) b</text>
+
+        <!-- Ветка operand2 -->
+        <rect x="20" y="795" width="120" height="50" rx="6" class="box"/>
+        <text x="80" y="820" class="txt">a op X = c</text>
+        <line x1="80" y1="845" x2="80" y2="920" class="arr"/>
+        <rect x="20" y="920" width="120" height="50" rx="6" class="box"/>
+        <text x="80" y="945" class="txt">X = a (обр. op) c</text>
+
+        <!-- Слияние результатов -->
+        <line x1="640" y1="970" x2="640" y2="990" class="arr"/>
+        <line x1="80" y1="970" x2="80" y2="990" class="arr"/>
+        <line x1="80" y1="990" x2="640" y2="990" class="arr"/>
+        <line x1="360" y1="990" x2="360" y2="1010" class="arr"/>
+
+        <!-- 9. Вывод результата -->
+        <polygon points="360,1010 600,1040 360,1070 120,1040" class="par"/>
+        <text x="360" y="1040" class="txt">Вывести значение X</text>
+    </svg>
+
+    <div class="legend">
+        <p><span style="background:#e8f5e9;border-radius:10px;"></span> Овал — начало / конец</p>
+        <p><span style="background:#f3e5f5;"></span> Параллелограмм — ввод / вывод данных</p>
+        <p><span style="background:#e3f2fd;"></span> Прямоугольник — действие / вычисление</p>
+        <p><span style="background:#fff3e0;"></span> Ромб — проверка условия (ветвление)</p>
+    </div>
+</div>
+
+<h2>Исходный код программы</h2>
+<p>Основная логика реализована в файле <code>equation_solver.php</code>. Данная страница демонстрирует его работу на примере варианта 4.</p>
+<p>Для запуска: откройте <code>variant4.php</code> через PHP-сервер или веб-сервер (например, XAMPP).</p>
+
+</body>
+</html>

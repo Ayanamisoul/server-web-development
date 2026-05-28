@@ -2,9 +2,10 @@
 
 /**
  * Роутер приложения.
- * Для каждого роута задаётся $pageTitle (по умолчанию "Мой блог" в layout.php)
- * и подключается нужный файл контента через общий layout-шаблон.
  */
+
+require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/controllers/ArticlesController.php';
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $uri = trim($uri, '/');
@@ -12,6 +13,8 @@ $parts = explode('/', $uri);
 
 // Роут / — главная страница
 if ($uri === '' || $uri === 'index.php') {
+    $articlesController = new ArticlesController($pdo);
+    $articles = $articlesController->index();
     $contentFile = __DIR__ . '/main_content.php';
     require __DIR__ . '/layout.php';
     exit;
@@ -22,6 +25,13 @@ if ($uri === 'about-me') {
     $pageTitle = 'Обо мне';
     $contentFile = __DIR__ . '/about_content.php';
     require __DIR__ . '/layout.php';
+    exit;
+}
+
+// Роут /article/$id
+if (count($parts) === 2 && $parts[0] === 'article' && is_numeric($parts[1])) {
+    $articlesController = new ArticlesController($pdo);
+    $articlesController->show((int)$parts[1]);
     exit;
 }
 

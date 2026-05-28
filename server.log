@@ -1,0 +1,10 @@
+[Thu May 28 13:19:22 2026] PHP 8.2.12 Development Server (http://localhost:8000) started
+[Thu May 28 13:19:42 2026] [::1]:51031 Accepted
+[Thu May 28 13:19:42 2026] [::1]:51031 [200]: GET /
+[Thu May 28 13:19:42 2026] [::1]:51031 Closing
+[Thu May 28 13:19:42 2026] [::1]:51032 Accepted
+[Thu May 28 13:19:42 2026] [::1]:51032 [200]: GET /article/1
+[Thu May 28 13:19:42 2026] [::1]:51032 Closing
+[Thu May 28 13:19:42 2026] [::1]:51033 Accepted
+[Thu May 28 13:19:42 2026] [::1]:51033 [200]: GET /article/1
+[Thu May 28 13:19:42 2026] [::1]:51033 Closing
